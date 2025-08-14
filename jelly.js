@@ -3,11 +3,14 @@ import {
   FilesetResolver,
 } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0'
 
-const demosSection = document.getElementById('demos')
+if (!navigator.mediaDevices?.getUserMedia) {
+  alert('getUserMedia() is not supported by your browser')
+}
 
-let faceDetector //: FaceDetector;
+let video = document.getElementById('webcam')
+const liveView = document.getElementById('liveView')
 
-// Initialize the object detector
+let faceDetector
 const initializefaceDetector = async () => {
   const vision = await FilesetResolver.forVisionTasks(
     'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm'
@@ -19,40 +22,12 @@ const initializefaceDetector = async () => {
     },
     runningMode: 'VIDEO',
   })
+
+  enableCam()
 }
 initializefaceDetector()
 
-let video = document.getElementById('webcam')
-const liveView = document.getElementById('liveView')
-let enableWebcamButton //: HTMLButtonElement;
-
-// Check if webcam access is supported.
-const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia
-
-// Keep a reference of all the child elements we create
-// so we can remove them easilly on each render.
-var children = []
-
-// If webcam supported, add event listener to button for when user
-// wants to activate it.
-if (hasGetUserMedia()) {
-  enableWebcamButton = document.getElementById('webcamButton')
-  enableWebcamButton.addEventListener('click', enableCam)
-} else {
-  console.warn('getUserMedia() is not supported by your browser')
-}
-
-// Enable the live webcam view and start detection.
 async function enableCam(event) {
-  if (!faceDetector) {
-    alert('Face Detector is still loading. Please try again..')
-    return
-  }
-
-  // Hide the button.
-  enableWebcamButton.classList.add('removed')
-
-  // Activate the webcam stream.
   navigator.mediaDevices
     .getUserMedia({
       video: true,
@@ -70,7 +45,6 @@ let lastVideoTime = -1
 async function predictWebcam() {
   let startTimeMs = performance.now()
 
-  // Detect faces using detectForVideo
   if (video.currentTime !== lastVideoTime) {
     lastVideoTime = video.currentTime
     const detections = faceDetector.detectForVideo(
@@ -80,19 +54,17 @@ async function predictWebcam() {
     displayVideoDetections(detections)
   }
 
-  // Call this function again to keep predicting when the browser is ready
+  // repeat when ready
   window.requestAnimationFrame(predictWebcam)
 }
 
+var childrenToRemove = []
 function displayVideoDetections(detections /* : Detection[] */) {
-  // Remove any highlighting from previous frame.
-
-  for (let child of children) {
+  for (let child of childrenToRemove) {
     liveView.removeChild(child)
   }
-  children.splice(0)
+  childrenToRemove.splice(0)
 
-  // Iterate through predictions and draw them to the live view
   for (let detection of detections) {
     const p = document.createElement('p')
     p.innerText =
@@ -133,9 +105,8 @@ function displayVideoDetections(detections /* : Detection[] */) {
     liveView.appendChild(highlighter)
     liveView.appendChild(p)
 
-    // Store drawn objects in memory so they are queued to delete at next call
-    children.push(highlighter)
-    children.push(p)
+    childrenToRemove.push(highlighter)
+    childrenToRemove.push(p)
     for (let keypoint of detection.keypoints) {
       const keypointEl = document.createElement('spam')
       keypointEl.className = 'key-point'
@@ -144,7 +115,7 @@ function displayVideoDetections(detections /* : Detection[] */) {
         video.offsetWidth - keypoint.x * video.offsetWidth - 3
       }px`
       liveView.appendChild(keypointEl)
-      children.push(keypointEl)
+      childrenToRemove.push(keypointEl)
     }
   }
 }
