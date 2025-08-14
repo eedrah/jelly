@@ -48,6 +48,7 @@ async function predictWebcam() {
       startTimeMs
     ).detections
     displayVideoDetections(detections)
+    publishPosition(video, detections?.[0])
   }
 
   // repeat when ready
@@ -116,4 +117,17 @@ function displayVideoDetections(detections /* : Detection[] */) {
       childrenToRemove.push(keypointEl)
     }
   }
+}
+
+const jellyElement = document.getElementById('jelly')
+function publishPosition(video, detection) {
+  const x =
+    1 -
+    (detection?.boundingBox?.originX + detection?.boundingBox?.width / 2) /
+      video.offsetWidth
+  const y =
+    (detection?.boundingBox?.originY + detection?.boundingBox?.height / 2) /
+    video.offsetHeight
+  jellyElement.dataset.focusX = x
+  jellyElement.dataset.focusY = y
 }
