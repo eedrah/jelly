@@ -9,12 +9,10 @@
   }
 }
 
-section {
+#jelly {
   height: 100vh;
   width: 100vw;
-}
 
-#jelly {
   background-image: url('./assets/background.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -55,6 +53,9 @@ section {
 
 #liveView {
   position: relative;
+  width: fit-content;
+  height: fit-content;
+  margin-inline: auto;
 
   video {
     display: block;
