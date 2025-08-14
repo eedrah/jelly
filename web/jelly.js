@@ -66,6 +66,7 @@ function displayVideoDetections(detections /* : Detection[] */) {
   childrenToRemove.splice(0)
 
   for (let detection of detections) {
+    console.log(detection)
     const p = document.createElement('p')
     p.innerText =
       'Confidence: ' +
@@ -108,7 +109,7 @@ function displayVideoDetections(detections /* : Detection[] */) {
     childrenToRemove.push(highlighter)
     childrenToRemove.push(p)
     for (let keypoint of detection.keypoints) {
-      const keypointEl = document.createElement('spam')
+      const keypointEl = document.createElement('span')
       keypointEl.className = 'key-point'
       keypointEl.style.top = `${keypoint.y * video.offsetHeight - 3}px`
       keypointEl.style.left = `${
