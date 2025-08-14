@@ -1,5 +1,6 @@
 {
     "editor.formatOnSave": true,
-    "vim.replaceWithRegister": false,
-    "vim.camelCaseMotion.enable": true
+    "vim.replaceWithRegister": true,
+    "vim.camelCaseMotion.enable": true,
+    "vim.highlightedyank.enable": true
 }
