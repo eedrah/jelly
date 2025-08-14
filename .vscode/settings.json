@@ -1,0 +1,5 @@
+{
+    "editor.formatOnSave": true,
+    "vim.replaceWithRegister": false,
+    "vim.camelCaseMotion.enable": true
+}
