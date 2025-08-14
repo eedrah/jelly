@@ -23,11 +23,6 @@ const initializefaceDetector = async () => {
     runningMode: 'VIDEO',
   })
 
-  enableCam()
-}
-initializefaceDetector()
-
-async function enableCam(event) {
   navigator.mediaDevices
     .getUserMedia({
       video: true,
@@ -40,6 +35,7 @@ async function enableCam(event) {
       console.error(err)
     })
 }
+initializefaceDetector()
 
 let lastVideoTime = -1
 async function predictWebcam() {
@@ -67,7 +63,8 @@ function displayVideoDetections(detections /* : Detection[] */) {
 
   for (let detection of detections) {
     console.log(detection)
-    const p = document.createElement('p')
+    const p = document.createElement('div')
+    p.classList.add('data')
     p.innerText =
       'Confidence: ' +
       Math.round(parseFloat(detection.categories[0].score) * 100) +
