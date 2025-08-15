@@ -77,7 +77,7 @@ function displayVideoDetections(detections /* : Detection[] */) {
         detection.boundingBox.originX) +
       'px;' +
       'top: ' +
-      (detection.boundingBox.originY - 30) +
+      detection.boundingBox.originY +
       'px; ' +
       'width: ' +
       (detection.boundingBox.width - 10) +
