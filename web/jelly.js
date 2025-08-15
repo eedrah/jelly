@@ -3,6 +3,56 @@ import {
   FilesetResolver,
 } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0'
 
+class JellyVoice {
+  constructor(outputElement) {
+    this.outputElement = outputElement
+  }
+
+  speak() {
+    const index = Math.floor(Math.random() * this.phrases.length)
+    this.outputElement.innerText = this.phrases[index]
+    console.log(this.phrases[index])
+  }
+
+  quieten() {
+    this.outputElement.innerText = ''
+  }
+
+  phrases = `You’re doing great
+    You look fantastic
+    You are everything you need
+    You are beautiful
+    You look good. Really. I’ve done the math and 100% of the times I’ve seen you I’ve felt good about it.
+    I’d fight for you. One of these fists has your name on it. In a good way.
+    I hope the sun shines on you, regardless of the weather.
+    You look like a strong swimmer.
+    Nice outfit.
+    I’ll never be as smart as you.
+    May you be kind to yourself in this moment.
+    Be gentle with yourself.
+    Asking for help can be strong, and brave.
+    Newtown is the best suburb!
+    Give yourself as much self-compassion as you can.
+    You’re doing so well, I see how hard you’re trying.
+    You are cared for.
+    You belong.
+    You are valued.
+    All of you can be accepted.
+    You deserve to feel safe.
+    You deserve to feel joy!
+    Take a deep breath.
+    Your body is a wonderful thing.
+    It’s ok to feel your emotions.
+    I love Newtown.
+    This too shall pass.
+    You can do it!
+    I’m proud of you.
+    You’re learning every day.
+    One step at a time and you’ll get there!`
+    .split('\n')
+    .map((p) => p.trim())
+}
+
 if (!navigator.mediaDevices?.getUserMedia) {
   alert('getUserMedia() is not supported by your browser')
 }
@@ -119,6 +169,7 @@ function displayVideoDetections(detections /* : Detection[] */) {
   }
 }
 
+const jellyVoice = new JellyVoice(document.getElementById('voice'))
 let previousFocusX = 0.5
 let previousFocusY = 0.5
 let focusedAmount = 0
@@ -146,7 +197,7 @@ function publishPosition(video, detection) {
     previousFocusX = x
     previousFocusY = y
     if (focusedAmount == 80) {
-      speak()
+      jellyVoice.speak()
     }
   } else {
     jellyEyes.style.removeProperty('left')
@@ -154,9 +205,6 @@ function publishPosition(video, detection) {
     focusedAmount = 0
     previousFocusX = NaN
     previousFocusY = NaN
+    jellyVoice.quieten()
   }
-}
-
-function speak() {
-  alert('hi')
 }
