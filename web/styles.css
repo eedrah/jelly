@@ -38,7 +38,8 @@
     max-width: 100vh;
     max-height: 100vh;
 
-    animation: BobUpAndDown 10s ease-in-out infinite;
+    animation: BobUpAndDown 15s cubic-bezier(0.75, -2.5, 0.25, 3.5) infinite,
+      FloatInWaves 7s ease-in-out infinite;
   }
 
   #eyes {
@@ -101,9 +102,22 @@
 @keyframes BobUpAndDown {
   0%,
   100% {
-    top: -10%;
+    top: 2%;
   }
   50% {
-    top: 30%;
+    top: 18%;
+  }
+}
+
+@keyframes FloatInWaves {
+  0%,
+  100% {
+    left: 0%;
+  }
+  25% {
+    left: -2%;
+  }
+  75% {
+    left: 2%;
   }
 }
