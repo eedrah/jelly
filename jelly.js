@@ -119,15 +119,16 @@ function displayVideoDetections(detections /* : Detection[] */) {
   }
 }
 
-const jellyElement = document.getElementById('jelly')
+const jellyEyes = document.getElementById('eyes')
 function publishPosition(video, detection) {
   const x =
-    1 -
+    0.5 -
     (detection?.boundingBox?.originX + detection?.boundingBox?.width / 2) /
       video.offsetWidth
   const y =
     (detection?.boundingBox?.originY + detection?.boundingBox?.height / 2) /
-    video.offsetHeight
-  jellyElement.dataset.focusX = x
-  jellyElement.dataset.focusY = y
+      video.offsetHeight -
+    0.5
+  jellyEyes.style.left = `${50 * x}%`
+  jellyEyes.style.top = `${20 + 15 * y}%`
 }
