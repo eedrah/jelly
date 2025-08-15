@@ -119,6 +119,9 @@ function displayVideoDetections(detections /* : Detection[] */) {
   }
 }
 
+let previousFocusX = 0.5
+let previousFocusY = 0.5
+let focusedAmount = 0
 const jellyEyes = document.getElementById('eyes')
 function publishPosition(video, detection) {
   const x =
@@ -133,8 +136,27 @@ function publishPosition(video, detection) {
   if (x && y) {
     jellyEyes.style.left = `${50 * x}%`
     jellyEyes.style.top = `${20 + 15 * y}%`
+
+    if (
+      Math.abs(x - previousFocusX) < 0.1 &&
+      Math.abs(y - previousFocusY) < 0.1
+    ) {
+      focusedAmount++
+    }
+    previousFocusX = x
+    previousFocusY = y
+    if (focusedAmount == 80) {
+      speak()
+    }
   } else {
     jellyEyes.style.removeProperty('left')
     jellyEyes.style.removeProperty('top')
+    focusedAmount = 0
+    previousFocusX = NaN
+    previousFocusY = NaN
   }
+}
+
+function speak() {
+  alert('hi')
 }
