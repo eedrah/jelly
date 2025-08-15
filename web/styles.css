@@ -20,6 +20,8 @@
 
   z-index: 10;
 
+  overflow: hidden;
+
   div {
     background-repeat: no-repeat;
     background-size: cover;
@@ -54,6 +56,17 @@
     background-image: url('./assets/pupils.png');
     top: 10%;
     height: 80%;
+  }
+
+  #voice {
+    position: absolute;
+    z-index: 10;
+    color: wheat;
+    text-align: center;
+    font-size: calc(2rem + 4vw);
+    text-shadow: 1px 1px 1px #000, 3px 3px 5px darkblue, 9px 9px 15px blue;
+    font-family: monospace;
+    width: 100%;
   }
 }
 
