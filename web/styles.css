@@ -37,6 +37,8 @@
     aspect-ratio: 1;
     max-width: 100vh;
     max-height: 100vh;
+
+    animation: BobUpAndDown 10s ease-in-out infinite;
   }
 
   #eyes {
@@ -92,5 +94,15 @@
     background-color: #ff0000;
     border-radius: 50%;
     display: block;
+  }
+}
+
+@keyframes BobUpAndDown {
+  0%,
+  100% {
+    top: -10%;
+  }
+  50% {
+    top: 30%;
   }
 }
