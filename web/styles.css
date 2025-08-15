@@ -33,15 +33,17 @@
 
     background-image: url('./assets/face.png');
 
-    /* top: 30%; */
-    height: 60%;
-    width: 60%;
+    height: 80%;
+    aspect-ratio: 1;
+    max-width: 100vh;
+    max-height: 100vh;
   }
 
   #eyes {
     background-image: url('./assets/eyes.png');
-    top: 30%;
     height: 50%;
+    top: 20%;
+    left: 0%;
   }
 
   #pupils {
