@@ -129,6 +129,12 @@ function publishPosition(video, detection) {
     (detection?.boundingBox?.originY + detection?.boundingBox?.height / 2) /
       video.offsetHeight -
     0.5
-  jellyEyes.style.left = `${50 * x}%`
-  jellyEyes.style.top = `${20 + 15 * y}%`
+
+  if (x && y) {
+    jellyEyes.style.left = `${50 * x}%`
+    jellyEyes.style.top = `${20 + 15 * y}%`
+  } else {
+    jellyEyes.style.removeProperty('left')
+    jellyEyes.style.removeProperty('top')
+  }
 }
